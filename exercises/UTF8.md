@@ -70,7 +70,7 @@ END;
       SELECT   COL_NAME, VAL, <PRIMARY_KEY_COLUMN>
       FROM     <TABLENAME>
       UNPIVOT  ( VAL FOR COL_NAME IN (
-      **<OUTPUT FROM STEP2>**
+      \**<OUTPUT FROM STEP2>\**
       ) )
       WHERE REGEXP_LIKE( VAL, UNISTR('[\D800-\DFFF]'));
       ```
@@ -81,7 +81,7 @@ END;
       SELECT   COL_NAME, VAL, <PRIMARY_KEY_COLUMN>
       FROM     <TABLENAME>
       UNPIVOT  ( VAL FOR COL_NAME IN (
-      <OUTPUT FROM STEP2>
+      \**<OUTPUT FROM STEP2>\**
       ) )
       WHERE REGEXP_LIKE( VAL, UNISTR('[\FFFF-\DBFF\DFFF]'));
       ```
