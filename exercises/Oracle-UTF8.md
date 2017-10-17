@@ -86,7 +86,7 @@ END;
       WHERE REGEXP_LIKE( VAL, UNISTR('[\FFFF-\DBFF\DFFF]'));
       ```
 
-## Usage:
+## Usage
 
 * Get the characterset:
 
