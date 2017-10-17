@@ -96,12 +96,12 @@ WHERE REGEXP_LIKE( VAL, UNISTR('[\FFFF-\DBFF\DFFF]'));
 
 * Based on the above output, ran the query in Step 2
 
-![UTF8identifier][erd]
+![UTF8identifier][erd1]
 
-[erd]: https://github.com/fdrgiit/LibraryMgmtSys/blob/master/Images/ora2.PNG "UTF8identifier"
+[erd1]: https://github.com/fdrgiit/LibraryMgmtSys/blob/master/Images/ora2.PNG "UTF8identifier"
 
 * Get the data in the columns based on the above output
 
-![columns][erd]
+![columns][erd2]
 
-[erd]: https://github.com/fdrgiit/LibraryMgmtSys/blob/master/Images/ora3.PNG "columns"
+[erd2]: https://github.com/fdrgiit/LibraryMgmtSys/blob/master/Images/ora3.PNG "columns"
