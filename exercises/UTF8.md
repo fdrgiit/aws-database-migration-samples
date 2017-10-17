@@ -64,27 +64,27 @@ END;
 
 * To further review the exact records from the tables which were the output of the above query, use the below mentioned one to get more granular view:
 
-** If the output from the step 1 is **UTF8 & AL16UTF16**, use the following query:
+  * If the output from the step 1 is **UTF8 & AL16UTF16**, use the following query:
 
-```
-SELECT   COL_NAME, VAL, <PRIMARY_KEY_COLUMN>
-FROM     <TABLENAME>
-UNPIVOT  ( VAL FOR COL_NAME IN (
-**<OUTPUT FROM STEP2>**
-) )
-WHERE REGEXP_LIKE( VAL, UNISTR('[\D800-\DFFF]'));
-```
+      ```
+      SELECT   COL_NAME, VAL, <PRIMARY_KEY_COLUMN>
+      FROM     <TABLENAME>
+      UNPIVOT  ( VAL FOR COL_NAME IN (
+      **<OUTPUT FROM STEP2>**
+      ) )
+      WHERE REGEXP_LIKE( VAL, UNISTR('[\D800-\DFFF]'));
+      ```
 
-** If the output from the step 1 is **AL32UTF8 & AL16UTF16**, use the following query:
+  * If the output from the step 1 is **AL32UTF8 & AL16UTF16**, use the following query:
 
-```
-SELECT   COL_NAME, VAL, <PRIMARY_KEY_COLUMN>
-FROM     <TABLENAME>
-UNPIVOT  ( VAL FOR COL_NAME IN (
-<OUTPUT FROM STEP2>
-) )
-WHERE REGEXP_LIKE( VAL, UNISTR('[\FFFF-\DBFF\DFFF]'));
-```
+      ```
+      SELECT   COL_NAME, VAL, <PRIMARY_KEY_COLUMN>
+      FROM     <TABLENAME>
+      UNPIVOT  ( VAL FOR COL_NAME IN (
+      <OUTPUT FROM STEP2>
+      ) )
+      WHERE REGEXP_LIKE( VAL, UNISTR('[\FFFF-\DBFF\DFFF]'));
+      ```
 
 ## Usage:
 
