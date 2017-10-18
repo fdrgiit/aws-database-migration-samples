@@ -185,3 +185,7 @@ Please follow the below mentioned steps to accurately detect the non-UTF8 Charac
 ![spUTF8check][erd3]
 
 [erd3]: https://github.com/fdrgiit/LibraryMgmtSys/blob/master/Images/sql2.PNG "spUTF8check"
+
+## Author
+
+Abhinav Singh
