@@ -105,3 +105,7 @@ END;
 ![columns][erd2]
 
 [erd2]: https://github.com/fdrgiit/LibraryMgmtSys/blob/master/Images/ora3.PNG "columns"
+
+## Author
+
+Abhinav Singh
