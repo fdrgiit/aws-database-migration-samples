@@ -8,59 +8,11 @@ Please follow the below mentioned steps to accurately detect the non-UTF8 Charac
 SELECT VALUE FROM V$NLS_PARAMETERS WHERE PARAMETER IN ('NLS_CHARACTERSET', 'NLS_NCHAR_CHARACTERSET');
 ```
 
-* If the output from the step 1 is **UTF8 & AL16UTF16**, use the following query:
+* If the output from the step 1 is **UTF8 & AL16UTF16**, use the pl/sql script mentioned in **`utf8.sql`**:
 
-```
-SET SERVEROUTPUT ON SIZE 100000
+* If the output from the step 1 is **AL32UTF8 & AL16UTF16**, use the pl/sql script mentioned in **`al32utf8.sql`**:
 
-DECLARE
-  MATCH_COUNT INTEGER;
-BEGIN  
-  FOR T IN (SELECT OWNER, TABLE_NAME, COLUMN_NAME FROM ALL_TAB_COLUMNS WHERE DATA_TYPE IN ('CHAR', 'VARCHAR2', 'NCHAR', 'NVARCHAR2', 'CLOB', 'NCLOB') AND OWNER = **'<SCHEMA_NAME>'**) 
-  LOOP   
-    BEGIN
-      EXECUTE IMMEDIATE    
-        'SELECT COUNT(*) FROM ' || T.OWNER || '.' || T.TABLE_NAME || ' WHERE REGEXP_LIKE ('||T.COLUMN_NAME||', UNISTR(''[\D800-\DFFF]''))'
-         INTO MATCH_COUNT;  
-      IF MATCH_COUNT > 0 THEN 
-        DBMS_OUTPUT.PUT_LINE( T.OWNER || '.' || T.TABLE_NAME ||' '||T.COLUMN_NAME||' '||MATCH_COUNT );
-      END IF; 
-    EXCEPTION
-      WHEN OTHERS THEN
-        DBMS_OUTPUT.PUT_LINE( 'ERROR ENCOUNTERED TRYING TO READ ' || T.COLUMN_NAME || ' FROM ' || T.OWNER || '.' || T.TABLE_NAME );
-    END;
-  END LOOP;
-END;
-
-```
-
-* If the output from the step 1 is **AL32UTF8 & AL16UTF16**, use the following query:
-
-```
-SET SERVEROUTPUT ON SIZE 100000
-
-DECLARE
-  MATCH_COUNT INTEGER;
-BEGIN  
-  FOR T IN (SELECT OWNER, TABLE_NAME, COLUMN_NAME FROM ALL_TAB_COLUMNS WHERE DATA_TYPE IN ('CHAR', 'VARCHAR2', 'NCHAR', 'NVARCHAR2', 'CLOB', 'NCLOB') AND OWNER = **'<SCHEMA_NAME>'**) 
-  LOOP   
-    BEGIN
-      EXECUTE IMMEDIATE    
-        'SELECT COUNT(*) FROM ' || T.OWNER || '.' || T.TABLE_NAME || ' WHERE REGEXP_LIKE ('||T.COLUMN_NAME||', UNISTR(''[\FFFF-\DBFF\DFFF]''))'
-         INTO MATCH_COUNT;  
-      IF MATCH_COUNT > 0 THEN 
-        DBMS_OUTPUT.PUT_LINE( T.OWNER || '.' || T.TABLE_NAME ||' '||T.COLUMN_NAME||' '||MATCH_COUNT );
-      END IF; 
-    EXCEPTION
-      WHEN OTHERS THEN
-        DBMS_OUTPUT.PUT_LINE( 'ERROR ENCOUNTERED TRYING TO READ ' || T.COLUMN_NAME || ' FROM ' || T.OWNER || '.' || T.TABLE_NAME );
-    END;
-  END LOOP;
-END;
-
-```
-
-**Note**: The output of the query gives the **TABLE NAME**, **COLUMN NAME** and the **TOTAL COUNT OF RECORDS** in a particular column which are non-UTF8 as per DMS.
+**Note**: The output of the above queries gives the **TABLE NAME**, **COLUMN NAME** and the **TOTAL COUNT OF RECORDS** in a particular column which are non-UTF8 as per DMS.
 
 * To further review the exact records from the tables which were the output of the above query, use the below mentioned one to get more granular view:
 
